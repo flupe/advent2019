@@ -7,7 +7,7 @@ data Mode = Pos | Imm deriving (Enum)
 
 main :: IO ()
 main = do
-    input <- map read . splitOn "," . unlines . lines <$> readFile "inputs/day5"
+    input <- map read . splitOn "," <$> readFile "inputs/day5"
     let prog = newListArray (0, length input) input
 
     prog >>= compute 1 >>= print

@@ -1,23 +1,20 @@
-{-# LANGUAGE ScopedTypeVariables, BlockArguments #-}
+{-# LANGUAGE BlockArguments #-}
 
 import Data.List.Split (splitOn)
 import Data.Array.IO
 
 type Program = IOUArray Int Int
 
-
 main :: IO ()
 main = do
-    input <- (map read . splitOn ",") <$> readFile "inputs/day2"
-    let prog :: IO Program = newListArray (0, length input) input
+    input <- map read . splitOn "," <$> readFile "inputs/day2"
+    let prog = newListArray (0, length input) input
 
     day1 prog >>= print
     day2 prog >>= print
 
-
 day1 :: IO Program -> IO Int
 day1 p = compute p 12 2
-
 
 day2 :: IO Program -> IO Int
 day2 p =
@@ -28,14 +25,12 @@ day2 p =
             if res == 19690720 then return (x * 100 + y)
             else rest
 
-
 compute :: IO Program -> Int -> Int -> IO Int
 compute p x y = do
     p <- p
     writeArray p 1 x
     writeArray p 2 y
     run p 0
-
 
 run :: Program -> Int -> IO Int
 run mem i = do
